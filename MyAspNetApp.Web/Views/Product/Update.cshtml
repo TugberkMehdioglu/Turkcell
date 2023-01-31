@@ -1,0 +1,92 @@
+﻿@model ProductUpdateViewModel
+@{
+    ViewData["Title"] = "Update";
+}
+
+<form asp-controller="Product" , asp-action="Update" enctype="multipart/form-data" method="post">
+
+    <input type="hidden" asp-for="Id" />
+    <input type="hidden" asp-for="ImagePath" />
+
+    <div class="mb-3">
+        <label class="form-label" asp-for="Name">Ürün ismi :</label>
+        <input class="form-control" asp-for="Name" />
+        <span asp-validation-for="Name" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label" asp-for="Price">Ürün fiyat :</label>
+        <input class="form-control" asp-for="Price" />
+        <span asp-validation-for="Price" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label" asp-for="Stock">Ürün stok :</label>
+        <input class="form-control" asp-for="Stock" />
+        <span asp-validation-for="Stock" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <select class="form-select" asp-for="Color" asp-items="@ViewBag.ColorSelect">
+            <option value="">Renk Seçiniz</option>
+        </select>
+        <span asp-validation-for="Color" class="text-danger"></span>
+    </div>
+
+    <div class="form-check mb-3">
+        <label class="form-check-label" asp-for="İsPublish">Yayınlansın mı ?</label>
+        <input class="form-check-input" asp-for="İsPublish" />
+        <span asp-validation-for="İsPublish" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <span>Ürün kaç ay satışta kalıcak ?</span>
+        @foreach (KeyValuePair<string, int> item in ViewBag.Expire as Dictionary<string, int>)
+        {
+            <div class="form-check">
+                <label class="form-check-label" for="@(item.Value)Expire">@item.Key</label>
+                <input class="form-check-input" checked="@(item.Value==ViewBag.ExpireValue?true:false)" id="@(item.Value)Expire" asp-for="Expire" type="radio" value="@item.Value" />
+            </div>
+        }
+        <span asp-validation-for="Expire" class="text-danger"></span>
+    </div>
+
+    <div class="form-floating mb-3">
+        <textarea class="form-control" asp-for="Description" placeholder="Ürün açıklaması"></textarea>
+        <label class="form-label" asp-for="Description">Ürün açıklama :</label>
+        <span asp-validation-for="Description" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label" asp-for="PublishDate">Ürün yayınlanma tarihi :</label>
+        <input class="form-control" asp-for="PublishDate" />
+        <span asp-validation-for="PublishDate" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        @{
+
+            <img style="width:100px; height:100px;" src="@(string.IsNullOrEmpty(Model.ImagePath) ? "/images/no-image-icon-6.png" : $"/images/{Model.ImagePath}")" />
+            @**@
+        }
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label" for="Image">Ürün Resim :</label>
+        <input type="file" class="form-control form-control-lg" asp-for="Image" />
+    </div>
+
+    <div class="mb-3">
+        <select asp-for="CategoryId" asp-items="@ViewBag.categorySelect" class="form-select">
+            <option value="">Kategori Seçiniz</option>
+        </select>
+        <span asp-validation-for="CategoryId" class="text-danger"></span>
+    </div>
+
+    <button type="submit" class="btn btn-outline-warning">Ürün Güncelle</button>
+
+</form>
+
+@section Scripts{
+    <partial name="_ValidationScriptsPartial"></partial>
+}

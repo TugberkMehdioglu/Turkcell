@@ -1,0 +1,75 @@
+﻿@model HashSet<ProductViewModel>
+@{
+    ViewData["Title"] = "Index";
+}
+
+@if (TempData["success"] != null)
+{
+    <div class="alert alert-success">@TempData["success"]</div>
+}
+
+
+<strong style="justify-content:center; display:flex; font-size:xx-large;" >Ürünler</strong>
+
+<p style="font-family:serif" class="fs-3">Ürün eklemek için <a asp-controller="Product" asp-action="Add">Tıklayınız...</a></p>
+
+<div class="table-responsive">
+    <table class="table table-striped">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th class="text-center">İsim</th>
+            <th class="text-center">Fiyat</th>
+            <th class="text-center">Stok</th>
+            <th class="text-center">Renk</th>
+            <th class="text-center">Yayınlanma</th>
+            <th class="text-center">Yayında Kalma Süresi</th>
+            <th class="text-center">Açıklama</th>
+            <th class="text-center">Yayınlanma Tarihi</th>
+            <th class="text-center">Resim</th>
+            <th class="text-center">Kategori</th>
+            <th class="text-center" colspan="3">İşlem</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (ProductViewModel item in Model)
+        {
+            <tr class="align-middle">
+                <td>@item.Id</td>
+                <td class="text-center">@item.Name</td>
+                <td class="text-center">@item.Price.Value.ToString("C2")</td>
+                <td class="text-center">@item.Stock</td>
+                <td class="text-center">@item.Color</td>
+                <td class="text-center">@(item.İsPublish?"Evet":"Hayır")</td>
+                <td class="text-center">@item.Expire</td>
+                <td class="text-center">@(item.Description.Length>20?item.Description.Substring(0, 20):item.Description)</td>
+                <td class="text-center">@item.PublishDate</td>
+                <td class="text-center">
+                        @if (!string.IsNullOrEmpty(item.ImagePath))
+                        {
+                            <img style="width:100px; height:100px;" src="/images/@item.ImagePath"/>
+                        }else
+                        {
+                            <img style="width:100px; height:100px;" src="/images/no-image-icon-6.png"/>
+                        }
+                </td>
+                <td class="text-center">@item.CategoryName</td>
+                <td class="text-center">
+                    <a class="btn btn-outline-warning" asp-controller="Product" asp-action="Update" asp-route-id="@item.Id">Güncelle</a>
+                </td>
+                <td class="text-center">
+                    <a class="btn btn-outline-danger" asp-controller="Product" asp-action="Delete" asp-route-id="@item.Id">Sil</a>
+                </td>
+                <td class="text-center">
+                        <a asp-route="product" asp-route-productid="@item.Id" class="btn btn-outline-primary">Ürün sayfasına git</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+</div>
+
+<a asp-route="productpage" asp-route-page=1 asp-route-pageSize=3>1. sayfadan 3 ürün ver</a>
+<a asp-route="productpage" asp-route-page=2 asp-route-pageSize=3>2. sayfadan 3 ürün ver</a>
+<a asp-controller="Blog" asp-action="Article" asp-route-name="makale-ismi" asp-route-id="2">Makaleye git</a>

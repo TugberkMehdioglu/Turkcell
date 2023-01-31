@@ -1,0 +1,16 @@
+﻿@{
+    ViewData["Title"] = "Privacy Policy";
+}
+
+
+<div class="row">
+    <div class="col-md-12">
+        <partial name="~/PartialViews/_ProductsListPartialView.cshtml" model="@ViewBag.productsListPartialViewModel"></partial>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <vc:product-list type="2"></vc:product-list>
+    </div>
+</div>

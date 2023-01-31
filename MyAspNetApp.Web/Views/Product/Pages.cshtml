@@ -1,0 +1,49 @@
+﻿@model HashSet<ProductViewModel>
+@{
+    ViewData["Title"] = "Pages";
+}
+
+<div class="table-responsive">
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th class="text-center">İsim</th>
+                <th class="text-center">Fiyat</th>
+                <th class="text-center">Stok</th>
+                <th class="text-center">Renk</th>
+                <th class="text-center">Yayınlanma</th>
+                <th class="text-center">Yayında Kalma Süresi</th>
+                <th class="text-center">Açıklama</th>
+                <th class="text-center">Yayınlanma Tarihi</th>
+                <th class="text-center" colspan="3">İşlem</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (ProductViewModel item in Model)
+            {
+                <tr>
+                    <td>@item.Id</td>
+                    <td class="text-center">@item.Name</td>
+                    <td class="text-center">@item.Price.Value.ToString("C2")</td>
+                    <td class="text-center">@item.Stock</td>
+                    <td class="text-center">@item.Color</td>
+                    <td class="text-center">@(item.İsPublish ? "Evet" : "Hayır")</td>
+                    <td class="text-center">@item.Expire</td>
+                    <td class="text-center">@(item.Description.Length > 20 ? item.Description.Substring(0, 20) : item.Description)</td>
+                    <td class="text-center">@item.PublishDate</td>
+                    <td class="text-center">
+                        <a class="btn btn-outline-warning" asp-controller="Product" asp-action="Update" asp-route-id="@item.Id">Güncelle</a>
+                    </td>
+                    <td class="text-center">
+                        <a class="btn btn-outline-danger" asp-controller="Product" asp-action="Delete" asp-route-id="@item.Id">Sil</a>
+                    </td>
+                    <td class="text-center">
+                        <a asp-controller="Product" asp-action="GetById" asp-route-productid="@item.Id" class="btn btn-outline-primary">Ürün sayfasına git</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+</div>

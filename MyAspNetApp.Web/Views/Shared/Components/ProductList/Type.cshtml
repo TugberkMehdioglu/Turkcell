@@ -1,0 +1,22 @@
+﻿@using MyAspNetApp.Web.ViewModels.WrapperClasses
+
+@model HashSet<ProductListComponentViewModel>
+
+    <strong class="text-center">Type.cshtml success</strong>
+<table class="table table-success table-hover">
+    <thead>
+        <tr>
+            <th class="text-center">İsim</th>
+            <th class="text-center">Açıklama</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (ProductListComponentViewModel item in Model)
+        {
+                <tr>
+                    <td class="text-center">@item.Name</td>
+                    <td class="text-center">@(item.Description.Length > 20 ? $"{item.Description.Substring(0, 20)} ..." : item.Description)</td>
+                </tr>
+        }
+    </tbody>
+</table>

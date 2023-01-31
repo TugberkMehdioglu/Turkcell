@@ -1,0 +1,41 @@
+﻿@using MyAspNetApp.Web.ViewModels
+
+@model VisitorViewModel
+
+
+@foreach (VisitorViewModel item in ViewBag.visitorViewModels as HashSet<VisitorViewModel>)
+{
+    <div class="card mb-3">
+        <div class="card-body">
+            <h5 class="card-title">@item.Name</h5>
+            <h6 class="card-subtitle mb-2 text-muted">@item.CreatedDate.ToShortDateString()</h6>
+            <p class="card-text">@item.Comment</p>
+        </div>
+    </div>
+}
+
+
+<hr />
+
+@if (@TempData["result"] != null)
+{
+    <div class="alert alert-info">
+        @TempData["result"]
+    </div>
+}
+
+<form asp-action="SaveVisitorComment" asp-controller="Home" method="post">
+
+    <div class="mb-3">
+        <label class="form-label" asp-for="Name">İsim :</label>
+        <input class="form-control" asp-for="Name" />
+    </div>
+
+    <div class="form-floating mb-3">
+        <textarea class="form-control" placeholder="Yorum" asp-for="Comment" style="height:100px;"></textarea>
+        <label asp-for="Comment">Comments</label>
+    </div>
+
+    <button class="btn btn-outline-primary">Kaydet</button>
+
+</form>

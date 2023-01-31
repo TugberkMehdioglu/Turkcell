@@ -1,0 +1,92 @@
+﻿@{
+    ViewData["Title"] = "Index";
+}
+
+@section Scripts{
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+
+            function loadComment() {
+                //Bu method her Call edildiğinde show edilmesi lazım çünkü method bitiminde hide ediliyor
+                //böylece her yorum yüklenirken loading spinner'ı gözükücek
+                $("#loading").show();
+                $.ajax({
+                    type: "GET",
+                    url: "/VisitorAjax/VisitorCommentList",
+                    success: function (data) {
+                        console.log(data)
+                        //ilk önce html'i temizleyip append etmen lazım yoksa son yorumun Client'da gözükmez, refresh etmesi gerekir
+                        //her seferinde html'i temizleyip sonra yorumları ekrana basar
+                        $("#comments").html("")
+                        $.each(data, (index, item) => {
+                            let myData = `    <div class="card mb-3">
+                                                 <div class="card-body">
+                                                    <h5 class="card-title">${item.name}</h5>
+                                                    <h6 class="card-subtitle mb-2 text-muted">${item.date}</h6>
+                                                    <p class="card-text">${item.comment}</p>
+                                                 </div>
+                                              </div>`;
+                            $("#comments").append(myData);                           
+                        });
+                        $("#loading").hide();
+                    },
+                    error: function (error) {
+                        console.log(error);
+                    }
+                });
+            };
+
+            loadComment();
+
+            $("#btnSave").click(function () {
+
+                var name = $("#Name").val();
+                var comment = $("#Comment").val();
+
+                var jsonData = { "name": name, "comment": comment }
+
+                $.ajax({
+
+                    type: "POST",
+                    url: "/VisitorAjax/SaveVisitorComment",
+                    data: jsonData,
+                    success: function (data) {
+                        alert("Yorum kaydedildi");
+                        loadComment();
+                    },
+                    error: function (error) {
+                        console.log(error);
+                    }
+                });
+            });
+        });
+    </script>
+}
+
+
+<div class="mb-3">
+    <label class="form-label" for="Name">İsim :</label>
+    <input class="form-control" id="Name" />
+</div>
+
+<div class="form-floating mb-3">
+    <textarea class="form-control" placeholder="Yorum" id="Comment" style="height:100px;"></textarea>
+    <label for="Comment">Comments</label>
+</div>
+
+<button id="btnSave" type="button" class="btn btn-outline-primary mb-3">Kaydet</button>
+
+
+<div id="loading" class="mb-3">
+    @*Jquery'de hide dediğimizden, burda kullanılan Class'lardan dolayı hide işlemeyebiliyor*@
+    @*hide'ın çalışması için bir yukarısına wrap'leyici div koyduk ve düzeldi*@
+    <div class="d-flex justify-content-center">
+        <div class="spinner-border" role="status">
+            <span class="visually-hidden">Loading...</span>
+        </div>
+    </div>
+</div>
+
+<div id="comments">
+</div>

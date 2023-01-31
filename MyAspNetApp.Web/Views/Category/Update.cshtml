@@ -1,0 +1,31 @@
+﻿@model CategoryViewModel
+@{
+    ViewData["Title"] = "Update";
+}
+
+<h1>Update</h1>
+
+@if (@ViewBag.exception != null)
+{
+    <div class="alert alert-danger">
+        @ViewBag.exception
+    </div>
+}
+
+<form asp-controller="Category" asp-action="Update" method="post">
+
+    <input type="hidden" asp-for="Id"/>
+
+    <div class="mb-3">
+        <label class="form-label" for="name">İsim: </label>
+        <input type="text" id="name" asp-for="Name" class="form-control"/>
+        <span asp-validation-for="Name" class="text-danger"></span>
+    </div>
+
+    <button type="submit" class="btn btn-outline-warning">Kategori Güncelle</button>
+
+</form>
+
+@section Scripts{
+    <partial name="_ValidationScriptsPartial"></partial>
+}

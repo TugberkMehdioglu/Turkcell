@@ -1,0 +1,26 @@
+﻿@using MyAspNetApp.Web.ViewModels.WrapperClasses;
+@using MyAspNetApp.Web.ViewModels;
+
+@model ProductListPartialViewModel
+
+<table class="table table-info table-hover">
+    <thead>
+        <tr>
+            <th class="text-center">Id</th>
+            <th class="text-center">İsim</th>
+            <th class="text-center">Fiyat</th>
+            <th class="text-center">Stok</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (ProductPartialViewModel item in Model.Products)
+        {
+            <tr>
+                <td class="text-center">@item.Id</td>
+                <td class="text-center">@item.Name</td>
+                <td class="text-center">@item.Price</td>
+                <td class="text-center">@item.Stock</td>
+            </tr>
+        }
+    </tbody>
+</table>

@@ -1,0 +1,22 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+    Product product = new() { Id = 1, Name = "Kalem 1", Price = 100, Stock = 200 };
+}
+
+
+<div class="row">
+
+    <div class="col-md-4">
+        <product-show product="@product"></product-show>
+        @*TagHelper'ın içindeki product attribute'u: ProductShowTagHelper Class'ındaki Product prop'udur*@
+    </div>
+
+        <div class="col-md-4">
+        <partial name="~/PartialViews/_ProductsListPartialView.cshtml" model="@ViewBag.productsListPartialViewModel"></partial>
+    </div>
+
+    <div class="col-md-4">
+        @await Component.InvokeAsync("ProductList", new{type=1})
+    </div>
+
+</div>

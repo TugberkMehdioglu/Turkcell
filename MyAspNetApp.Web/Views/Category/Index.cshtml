@@ -1,0 +1,42 @@
+﻿@model List<CategoryViewModel>
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1 class="text-center">Kategoriler</h1>
+
+@if (@TempData["success"] != null)
+{
+    <div class="alert alert-success">
+        @TempData["success"]
+    </div>
+}
+
+<a asp-controller="Category" asp-action="Add">Kategori Ekle</a>
+
+<div class="table-responsive">
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th class="text-center">Id</th>
+                <th class="text-center">İsim</th>
+                <th class="text-center" colspan="2">İşlemler</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (CategoryViewModel item in Model)
+            {
+                <tr>
+                    <td class="text-center">@item.Id</td>
+                    <td class="text-center">@item.Name</td>
+                    <td class="text-center">
+                        <a asp-controller="Category" asp-action="Update" class="btn btn-outline-warning" asp-route-id="@item.Id">Güncelle</a>
+                    </td>
+                    <td class="text-center">
+                        <a asp-controller="Category" asp-action="Remove" class="btn btn-outline-danger" asp-route-id="@item.Id">Sil</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
